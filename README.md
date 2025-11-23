@@ -12,8 +12,20 @@
 
 Evaluates student introduction transcripts and provides scores across 5 criteria using:
 1. **Rule-Based Matching** - Keywords, patterns, word counts
-2. **NLP Semantic Analysis** - sentence-transformers (all-MiniLM-L6-v2)
+2. **NLP Semantic Analysis** - sentence-transformers (all-MiniLM-L6-v2) *
 3. **Data-Driven Weighting** - Rubric-based scoring (0-100)
+
+> [!IMPORTANT]
+> **Deployment Note**: The deployed version has **semantic analysis disabled** to work on free hosting tiers.
+> 
+> **Why?** Semantic analysis uses large AI models (PyTorch + sentence-transformers):
+> - Increases build time: 2 min → 10 min
+> - Increases memory usage: 300MB → 1.5GB
+> - Causes timeouts on free hosting (Railway, Render, Heroku)
+>
+> **What you still get**: All 5 evaluation criteria work perfectly with rule-based scoring, grammar checking, and sentiment analysis!
+>
+> **Local use**: To enable semantic scoring locally, edit `web_app.py` line 10: `use_semantic=True`
 
 **Input**: Transcript text + Duration (seconds)  
 **Output**: Overall score + Per-criterion breakdown + Detailed feedback

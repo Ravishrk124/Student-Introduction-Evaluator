@@ -10,7 +10,9 @@ import os
 app = Flask(__name__)
 
 # Initialize evaluator
-evaluator = StudentEvaluator()
+# Semantic analysis disabled for deployment (reduces build time from 10min to 2min, memory from 1.5GB to 300MB)
+# To enable semantic similarity scoring locally, change to: use_semantic=True
+evaluator = StudentEvaluator(use_semantic=False)
 
 
 @app.route('/')
