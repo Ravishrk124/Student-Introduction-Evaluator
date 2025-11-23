@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Introduction Evaluator</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <h1>🎓 Student Introduction Evaluator</h1>
+            <p class="subtitle">AI-Powered Speech Analysis Tool</p>
+        </header>
+
+        <div class="main-content">
+            <!-- Input Section -->
+            <section class="input-section">
+                <h2>📝 Input Transcript</h2>
+
+                <!-- File Upload Option -->
+                <div class="form-group">
+                    <label for="file-upload">📎 Upload Text File (Optional):</label>
+                    <div class="file-upload-wrapper">
+                        <input type="file" id="file-upload" accept=".txt,.doc,.docx" onchange="handleFileUpload(event)"
+                            class="file-input">
+                        <label for="file-upload" class="file-label">
+                            <span class="file-icon">📁</span>
+                            <span id="file-name">Choose a file or drag & drop</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- OR Separator -->
+                <div class="separator">
+                    <span>OR</span>
+                </div>
+
+                <div class="form-group">
+                    <label for="transcript">✍️ Paste Transcript Here:</label>
+                    <textarea id="transcript" placeholder="Enter the student's introduction here..."
+                        rows="8"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="duration">⏱️ Duration (seconds):</label>
+                    <input type="number" id="duration" placeholder="e.g., 52" min="1" value="52">
+                </div>
+
+                <div class="button-group">
+                    <button onclick="loadSample()" class="btn btn-secondary">
+                        📋 Load Sample
+                    </button>
+                    <button onclick="clearAll()" class="btn btn-secondary">
+                        🗑️ Clear
+                    </button>
+                    <button onclick="evaluateTranscript()" class="btn btn-primary">
+                        🚀 Evaluate Now
+                    </button>
+                </div>
+            </section>
+
+            <!-- Results Section -->
+            <section class="results-section" id="results-section" style="display: none;">
+                <h2>📊 Evaluation Results</h2>
+
+                <!-- Summary Card -->
+                <div class="summary-card">
+                    <div class="score-display">
+                        <div class="final-score" id="final-score">--/100</div>
+                        <div class="grade-badge" id="grade-badge">-</div>
+                    </div>
+                    <div class="metadata">
+                        <div class="meta-item">
+                            <span class="meta-label">Words:</span>
+                            <span class="meta-value" id="word-count">--</span>
+                        </div>
+                        <div class="meta-item">
+                            <span class="meta-label">WPM:</span>
+                            <span class="meta-value" id="wpm">--</span>
+                        </div>
+                        <div class="meta-item">
+                            <span class="meta-label">Sentences:</span>
+                            <span class="meta-value" id="sentence-count">--</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Detailed Scores -->
+                <div class="scores-grid">
+                    <!-- Content & Structure -->
+                    <div class="score-card">
+                        <h3>📝 Content & Structure</h3>
+                        <div class="score-bar">
+                            <div class="score-fill" id="content-fill"></div>
+                        </div>
+                        <div class="score-details">
+                            <span id="content-score">--/40</span>
+                            <span id="content-percent" class="percentage">--%</span>
+                        </div>
+                        <div class="breakdown">
+                            <div class="breakdown-item">
+                                <span>Salutation:</span>
+                                <span id="salutation-score">--/5</span>
+                            </div>
+                            <div class="breakdown-item">
+                                <span>Keywords:</span>
+                                <span id="keywords-score">--/30</span>
+                            </div>
+                            <div class="breakdown-item">
+                                <span>Flow:</span>
+                                <span id="flow-score">--/5</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Speech Rate -->
+                    <div class="score-card">
+                        <h3>⚡ Speech Rate</h3>
+                        <div class="score-bar">
+                            <div class="score-fill" id="speech-fill"></div>
+                        </div>
+                        <div class="score-details">
+                            <span id="speech-score">--/10</span>
+                            <span id="speech-label" class="label">--</span>
+                        </div>
+                    </div>
+
+                    <!-- Language & Grammar -->
+                    <div class="score-card">
+                        <h3>📖 Language & Grammar</h3>
+                        <div class="score-bar">
+                            <div class="score-fill" id="grammar-fill"></div>
+                        </div>
+                        <div class="score-details">
+                            <span id="grammar-score">--/20</span>
+                            <span id="grammar-percent" class="percentage">--%</span>
+                        </div>
+                        <div class="breakdown">
+                            <div class="breakdown-item">
+                                <span>Grammar:</span>
+                                <span id="grammar-subscore">--/10</span>
+                            </div>
+                            <div class="breakdown-item">
+                                <span>Vocabulary:</span>
+                                <span id="vocab-score">--/10</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Clarity -->
+                    <div class="score-card">
+                        <h3>✨ Clarity</h3>
+                        <div class="score-bar">
+                            <div class="score-fill" id="clarity-fill"></div>
+                        </div>
+                        <div class="score-details">
+                            <span id="clarity-score">--/15</span>
+                            <span id="filler-info" class="label">--</span>
+                        </div>
+                    </div>
+
+                    <!-- Engagement -->
+                    <div class="score-card">
+                        <h3>💫 Engagement</h3>
+                        <div class="score-bar">
+                            <div class="score-fill" id="engagement-fill"></div>
+                        </div>
+                        <div class="score-details">
+                            <span id="engagement-score">--/15</span>
+                            <span id="sentiment-label" class="label">--</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="action-buttons" style="margin-top: 24px; display: flex; gap: 12px; flex-wrap: wrap;">
+                    <button onclick="downloadJSON()" class="btn btn-secondary">
+                        💾 Download JSON
+                    </button>
+                    <button onclick="exportPDF()" class="btn btn-secondary">
+                        📄 Export PDF
+                    </button>
+                    <button onclick="shareResults()" class="btn btn-secondary">
+                        🔗 Share Link
+                    </button>
+                    <button onclick="evaluateAgain()" class="btn btn-primary">
+                        🔄 Evaluate Another
+                    </button>
+                </div>
+            </section>
+
+            <!-- Loading Spinner -->
+            <div class="loading" id="loading" style="display: none;">
+                <div class="spinner"></div>
+                <p>Analyzing transcript...</p>
+            </div>
+
+            <!-- Error Message -->
+            <div class="error-message" id="error-message" style="display: none;"></div>
+        </div>
+
+        <footer>
+            <p>Built with ❤️ for Nirmaan AI Case Study</p>
+        </footer>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/export.js') }}"></script>
+</body>
+
+</html>
