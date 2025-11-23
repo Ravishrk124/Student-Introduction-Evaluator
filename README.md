@@ -5,6 +5,9 @@
 [![Python](https://img.shields.io/badge/Python-3.9+-blue.svg)](https://www.python.org/)
 [![Flask](https://img.shields.io/badge/Flask-3.0+-green.svg)](https://flask.palletsprojects.com/)
 [![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![Live Demo](https://img.shields.io/badge/Live-Demo-success.svg)](https://student-introduction-evaluator-production.up.railway.app)
+
+> **🚀 Live Demo**: [https://student-introduction-evaluator-production.up.railway.app](https://student-introduction-evaluator-production.up.railway.app)
 
 ---
 

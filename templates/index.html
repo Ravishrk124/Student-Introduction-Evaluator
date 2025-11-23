@@ -13,6 +13,26 @@
         <header>
             <h1>🎓 Student Introduction Evaluator</h1>
             <p class="subtitle">AI-Powered Speech Analysis Tool</p>
+
+            <!-- Deployment Notice -->
+            <div
+                style="background: linear-gradient(135deg, #FFF3CD 0%, #FFF8E1 100%); border-left: 4px solid #FFA000; padding: 12px 16px; border-radius: 8px; margin: 16px 0; font-size: 0.9rem;">
+                <strong>ℹ️ Deployment Note:</strong> This deployed version uses <strong>rule-based scoring</strong>
+                (semantic analysis disabled to work on free hosting).
+                <details style="margin-top: 8px; cursor: pointer;">
+                    <summary style="font-weight: 600; color: #F57C00;">Why is semantic analysis disabled?</summary>
+                    <div style="margin-top: 8px; padding-left: 12px; border-left: 2px solid #FFB74D;">
+                        <p style="margin: 4px 0;"><strong>Reason:</strong> Semantic AI models (sentence-transformers +
+                            PyTorch) require 4GB download and 1.5GB RAM, causing deployment timeouts on free hosting.
+                        </p>
+                        <p style="margin: 4px 0;"><strong>What you still get:</strong> All 5 evaluation criteria work
+                            perfectly with rule-based scoring, grammar checking, and sentiment analysis!</p>
+                        <p style="margin: 4px 0;"><strong>Local use:</strong> To enable semantic scoring locally, edit
+                            <code>web_app.py</code> line 10: <code>use_semantic=True</code> and install:
+                            <code>pip install sentence-transformers torch</code></p>
+                    </div>
+                </details>
+            </div>
         </header>
 
         <div class="main-content">
