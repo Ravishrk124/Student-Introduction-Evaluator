@@ -16,7 +16,13 @@ from .analyzers import (
     ClarityAnalyzer,
     EngagementAnalyzer
 )
-from .analyzers.semantic_analyzer import SemanticAnalyzer
+# Semantic analyzer is optional - requires sentence-transformers
+try:
+    from .analyzers.semantic_analyzer import SemanticAnalyzer
+    SEMANTIC_AVAILABLE = True
+except ImportError:
+    SEMANTIC_AVAILABLE = False
+    
 from .utils.keywords import count_sentences, tokenize_words
 
 
