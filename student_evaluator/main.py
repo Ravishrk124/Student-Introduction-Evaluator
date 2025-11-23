@@ -36,11 +36,11 @@ class StudentEvaluator:
         self.clarity_analyzer = ClarityAnalyzer()
         self.engagement_analyzer = EngagementAnalyzer()
         
-        # Initialize semantic analyzer if requested
-        self.use_semantic = use_semantic
+        # Initialize semantic analyzer if available and requested
+        self.use_semantic = use_semantic and SEMANTIC_AVAILABLE
         self.semantic_analyzer = None
         
-        if use_semantic:
+        if self.use_semantic:
             try:
                 self.semantic_analyzer = SemanticAnalyzer()
                 print("✅ Semantic analysis enabled (NLP-based)")
